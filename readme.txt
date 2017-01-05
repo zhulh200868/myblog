@@ -1,1 +1,1 @@
-This is a simple blog 
+This is a simple blog
