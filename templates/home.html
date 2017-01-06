@@ -2,15 +2,20 @@
 
 {% load custom_markdown %}
 {% block content %}
+<style>
+a { color:#4d85d1; transition:0.5s; }
+a:hover { color:brown; }
+</style>
 <div class="posts">
     {% for post in post_list %}
         <section class="post">
             <header class="post-header">
-                <h2 class="post-title"><a href="{% url 'detail' id=post.id %}">{{ post.title }}</a></h2>
+                <h3 style="font-weight:bold;text-align:center"><a style="color: black; text-decoration:none; " class="post-author" href="{% url 'detail' id=post.id %}">{{ post.date_time |date:'Y年n月d日'}}</a></h3>
+                <h2 class="post-title"><a style="text-decoration:none; " href="{% url 'detail' id=post.id %}">{{ post.title }}</a></h2>
 
-                    <p class="post-meta">
-                        Time: <a class="post-author" href="#">{{ post.date_time |date:'Y M d'}}</a>&nbsp&nbsp
-                    </p>
+                    <!--<p class="post-meta">-->
+                        <!--Time: <a class="post-author" href="#">{{ post.date_time |date:'Y M d'}}</a>&nbsp&nbsp-->
+                    <!--</p>-->
             </header>
 
                 <div class="post-description">
@@ -23,14 +28,16 @@
     {% endfor %}
 
     {% if post_list.object_list and post_list.paginator.num_pages > 1 %}
-      <div>
+      <div style="text-align:center">
       <ul class="pager">
       {% if post_list.has_previous %}
-        <li><a href="?page={{ post_list.previous_page_number }}">上一页</a></li>
+          <a style="color: red" href="?page={{ post_list.previous_page_number }}">上一页</a>
+        <!--<li><a href="?page={{ post_list.previous_page_number }}">上一页</a></li>-->
       {% endif %}
 
       {% if post_list.has_next %}
-        <li><a href="?page={{ post_list.next_page_number }}">下一页</a></li>
+          <a style="color: red" href="?page={{ post_list.next_page_number }}">下一页</a>
+        <!--<li><a href="?page={{ post_list.next_page_number }}">下一页</a></li>-->
       {% endif %}
       </ul>
       </div>
