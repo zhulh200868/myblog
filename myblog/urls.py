@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^tag/(?P<tag>\w+)/$', 'web.views.search_tag', name = 'search_tag'),
     url(r'^search/$','web.views.blog_search', name = 'search'),
     url(r'^feed/$', RSSFeed(), name = "RSS"),
+    # url(r'^article/(?P<article_id>\d+)/comment/$', 'web.views.CommentPostView.as_view()', name='comment'),
 )
 
 

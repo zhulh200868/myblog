@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404,HttpResponseRedirect
 from django.http import Http404
 
 from django.contrib.syndication.views import Feed
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from web.models import Article
+from web.models import Article,BlogComment
 from web.models import Tag
-
+from django.views.generic.edit import CreateView, FormView
+from .forms import BlogCommentForm
 from datetime import datetime
 
 
@@ -97,3 +98,23 @@ class RSSFeed(Feed) :
 
     def item_description(self, item):
         return item.content
+
+class CommentPostView(FormView):
+    form_class = BlogCommentForm
+    template_name = 'post.html'
+
+    def form_valid(self, form):
+        target_article = get_object_or_404(Article, pk=self.kwargs['article_id'])
+        comment = form.save(commit=False)
+        comment.article = target_article
+        comment.save()
+        self.success_url = target_article.get_absolute_url()
+        return HttpResponseRedirect(self.success_url)
+
+    def form_invalid(self, form):
+        target_article = get_object_or_404(Article, pk=self.kwargs['article_id'])
+        return render(self.request, 'post.html', {
+            'form': form,
+            'article': target_article,
+            'comment_list': target_article.blogcomment_set.all(),
+        })
