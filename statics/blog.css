@@ -35,7 +35,8 @@ h3 {
 
 .sidebar {
     background: rgb(65, 71, 93);
-    color: #fff;
+    /*color: #fff;*/
+    color: azure;
 }
 
 .brand-title,
